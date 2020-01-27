@@ -1,0 +1,36 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    container_name: mysql
+    restart: always
+    volumes:
+      - "${DATA_DIR}/mysql:/var/lib/mysql"
+    environment: 
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+  nextcloud:
+    image: nextcloud:${NEXTCLOUD_VERSION}
+    container_name: nextcloud
+    restart: always
+    ports:
+      - 80
+    volumes:
+      - "${DATA_DIR}/mysql:/var/lib/mysql"
+      - "${DATA_DIR}/nextcloud:/var/www/html"
+    links:
+      - mysql:mysql
+    environment:
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      VIRTUAL_HOST: ${HOST}
+      LETSENCRYPT_HOST: ${HOST}
+    depends_on:
+      - mysql
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}

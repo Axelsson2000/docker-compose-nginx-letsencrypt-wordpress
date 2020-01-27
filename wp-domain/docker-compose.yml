@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+   db_bluemotion:
+     image: mysql:5.7
+     volumes:
+       - db_data_bluemotion:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+       MYSQL_DATABASE: ${MYSQL_DATABASE}
+       MYSQL_USER: ${MYSQL_USER}
+       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+   wordpress_bluemotion:
+     depends_on:
+       - db_bluemotion
+     image: wordpress:latest
+     ports:
+       - 80
+     volumes:
+     - ${WP_CORE}:/var/www/html
+     - ${WP_CONTENT}:/var/www/html/wp-content
+     restart: always
+     environment:
+       VIRTUAL_HOST: ${DOMAIN_NAME}
+       WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+       WORDPRESS_DB_USER: ${WP_USER}
+       WORDPRESS_DB_PASSWORD: ${WP_PASSWORD}
+       LETSENCRYPT_HOST: ${DOMAIN_NAME}
+       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+volumes:
+    db_data_bluemotion: {}
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
