@@ -1,5 +1,6 @@
 Info
 
+Samtliga cointaners är beroende av "Companion" för att få "Let's Encrypt" att fungera".
 
 Kolla att extern IP pekar till domän/domäner.
 Kopiera in mapparna till ex home/docker.
@@ -27,7 +28,7 @@ sudo mkdir -p /var/www/wp-www/core/files
 (ersätt wp-www med samma namn som finns i .env-filen för din wordpress-compose)
 
 Skapa nät
-sudo docker network create wordpress
+sudo docker network create webproxy
 --------------------
 Wordpress: FTP fråga vid uppdatering av docker-compose wordpress som har data på riktiga datorn
 (inte så konstigt då containern inte har behörighet på själva datorns filsystem)
