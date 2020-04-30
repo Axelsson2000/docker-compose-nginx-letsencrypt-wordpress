@@ -1,0 +1,1 @@
+Om du vill använda variabler så välj "minio_env".
