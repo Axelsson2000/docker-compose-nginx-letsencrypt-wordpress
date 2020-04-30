@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  minio1:
+    image: minio/minio:RELEASE.2020-04-28T23-56-56Z
+    volumes:
+      - ./minio:/export
+    ports:
+       - 9000
+    environment:
+      MINIO_ACCESS_KEY: MyAccessKey
+      MINIO_SECRET_KEY: MySecretKey2020!
+      MINIO_DOMAIN:  subdomain.domain.com
+      VIRTUAL_HOST: subdomain.domain.com
+      LETSENCRYPT_HOST: subdomain.domain.com
+      LETSENCRYPT_EMAIL: name@domain.com
+    command: server /export
+
+networks:
+  default:
+    external:
+      name: webproxy
