@@ -1,0 +1,1 @@
+Edit and rename sample.env to .env
