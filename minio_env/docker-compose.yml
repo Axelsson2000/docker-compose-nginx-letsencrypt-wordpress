@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  minio1:
+    image: minio/minio:RELEASE.2020-04-28T23-56-56Z
+    volumes:
+      - ./minio:/export
+    ports:
+       - 9000
+    restart: always
+    environment:
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MINIO_DOMAIN: ${DOMAIN_NAME}
+      VIRTUAL_HOST: ${DOMAIN_NAME}
+      LETSENCRYPT_HOST: ${DOMAIN_NAME}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+    command: server /export
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
